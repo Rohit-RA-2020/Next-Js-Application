@@ -5,32 +5,41 @@ import {
   MDBCardText,
   MDBBtn,
 } from "mdb-react-ui-kit";
+import Link from "next/link";
 const axios = require("axios").default;
 
-const index = () => {
+const index = ({ heros }) => {
   return (
     <div className="container">
       <h1 className="display-2">Superhero Identity Manager</h1>
       <div>
-        <MDBCard className="border border-2" style={{ maxWidth: "22rem" }}>
+        {heros.map((hero) => {
+          return (
+            <MDBCard className="border border-2 my-2" style={{ maxWidth: "22rem" }}>
           <MDBCardBody>
-            <MDBCardTitle>Card title</MDBCardTitle>
+            <MDBCardTitle>{hero.superHero}</MDBCardTitle>
             <MDBCardText>
-              Some quick example text to build on the card title and make up the
-              bulk of the card's content.
+              Reveal Identity
             </MDBCardText>
-            <MDBBtn>Button</MDBBtn>
+            <Link href={'/'}><MDBBtn className="mx-2">View Hero</MDBBtn></Link>
+            <Link href={'/'}><MDBBtn>Edit Hero</MDBBtn></Link>
           </MDBCardBody>
         </MDBCard>
+          );
+        })}
       </div>
     </div>
   );
 };
 
-index.getInitialProps = async () => {
-  const res = await axios('http://localhost:3000/api/hero')
-  console.log(res.data);
-  return {}
+export async function getStaticProps(context) {
+  const res = await axios("http://localhost:3000/api/hero");
+  // console.log(res.data.hero);
+  const { hero } = res.data;
+  console.log(hero);
+  return {
+    props: { heros: hero },
+  };
 }
 
 export default index;
