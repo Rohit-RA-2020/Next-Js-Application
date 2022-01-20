@@ -27,8 +27,8 @@ function addNewHero() {
           "Content-Type": "application/json",
         },
         data: JSON.stringify(form),
-    });
-    Router.push("/")
+      });
+      Router.push("/");
     } catch (error) {
       console.log(error);
     }

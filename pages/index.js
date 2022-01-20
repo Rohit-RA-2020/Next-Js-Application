@@ -15,16 +15,21 @@ const index = ({ heros }) => {
       <div>
         {heros.map((hero) => {
           return (
-            <MDBCard className="border border-2 my-2" style={{ maxWidth: "22rem" }}>
-          <MDBCardBody>
-            <MDBCardTitle>{hero.superHero}</MDBCardTitle>
-            <MDBCardText>
-              Reveal Identity
-            </MDBCardText>
-            <Link href={`/${hero._id}`}><MDBBtn className="mx-2">View Hero</MDBBtn></Link>
-            <Link href={'/'}><MDBBtn>Edit Hero</MDBBtn></Link>
-          </MDBCardBody>
-        </MDBCard>
+            <MDBCard
+              className="border border-2 my-2"
+              style={{ maxWidth: "22rem" }}
+            >
+              <MDBCardBody>
+                <MDBCardTitle>{hero.superHero}</MDBCardTitle>
+                <MDBCardText>Reveal Identity</MDBCardText>
+                <Link href={`/${hero._id}`}>
+                  <MDBBtn className="mx-2">View Hero</MDBBtn>
+                </Link>
+                <Link href={"/"}>
+                  <MDBBtn>Edit Hero</MDBBtn>
+                </Link>
+              </MDBCardBody>
+            </MDBCard>
           );
         })}
       </div>
@@ -32,7 +37,7 @@ const index = ({ heros }) => {
   );
 };
 
-export async function getStaticProps(context) {
+export async function getServerSideProps(context) {
   const res = await axios("http://localhost:3000/api/hero");
   // console.log(res.data.hero);
   const { hero } = res.data;
